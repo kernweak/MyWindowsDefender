@@ -27,4 +27,13 @@ public:
 	afx_msg void OnBnClickedVA();
 	afx_msg void OnBnClickedRVA();
 	afx_msg void OnBnClickedFOA();
+	BYTE* g_pFileImageBase = 0;
+	PIMAGE_NT_HEADERS g_pNt = 0;
+	CString m_PEload;
+	BOOL OnInitDialog();
+	afx_msg void OnBnClickedCalcu();
+	DWORD RVAtoFOA(DWORD dwRVA);
+	DWORD FOAtoRVA(DWORD dwRVA);
+	PIMAGE_NT_HEADERS32 m_pNt;
 };
+

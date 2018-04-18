@@ -114,6 +114,9 @@ void CPEeditor::showPE()
 	m_CheckSum.Format(L"%x", pNTHeader->OptionalHeader.CheckSum);
 	m_SizeOfOptionalHeader.Format(L"%x", pNTHeader->FileHeader.SizeOfOptionalHeader);
 	m_NumberOfRvaAndSizes.Format(L"%x", pNTHeader->OptionalHeader.NumberOfRvaAndSizes);
+	//关闭句柄
+	delete[] pFileBuf;
+	CloseHandle(hFile);
 	
 }
 
@@ -130,6 +133,7 @@ void CPEeditor::OnBnClickedCalcu()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CPECalcu Calcu;
+	Calcu.m_PEload = m_PEload;
 	Calcu.DoModal();
-
+	
 }
