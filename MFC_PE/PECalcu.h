@@ -28,12 +28,17 @@ public:
 	afx_msg void OnBnClickedRVA();
 	afx_msg void OnBnClickedFOA();
 	BYTE* g_pFileImageBase = 0;
-	PIMAGE_NT_HEADERS g_pNt = 0;
+	PIMAGE_NT_HEADERS32 m_pNt = 0;
 	CString m_PEload;
 	BOOL OnInitDialog();
 	afx_msg void OnBnClickedCalcu();
+	DWORD VAtoFOA(DWORD VA);
+	DWORD VAtoRVA(DWORD VA);
 	DWORD RVAtoFOA(DWORD dwRVA);
 	DWORD FOAtoRVA(DWORD dwRVA);
-	PIMAGE_NT_HEADERS32 m_pNt;
+	DWORD RVAtoVA(DWORD dwRVA);
+	DWORD FOAtoVA(DWORD dwFOA);
+	//PIMAGE_NT_HEADERS32 m_pNt;
+	int temp = -1;//设置输入的是哪个值，
 };
 

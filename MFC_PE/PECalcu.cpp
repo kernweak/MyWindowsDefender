@@ -52,6 +52,7 @@ void CPECalcu::OnBnClickedVA()
 	GetDlgItem(IDC_EDIT1)->EnableWindow(TRUE);
 	GetDlgItem(IDC_EDIT2)->EnableWindow(FALSE);
 	GetDlgItem(IDC_EDIT3)->EnableWindow(FALSE);
+	temp = 1;
 }
 
 
@@ -61,6 +62,7 @@ void CPECalcu::OnBnClickedRVA()
 	GetDlgItem(IDC_EDIT1)->EnableWindow(FALSE);
 	GetDlgItem(IDC_EDIT2)->EnableWindow(TRUE);
 	GetDlgItem(IDC_EDIT3)->EnableWindow(FALSE);
+	temp = 2;
 }
 
 
@@ -69,6 +71,7 @@ void CPECalcu::OnBnClickedFOA()
 	GetDlgItem(IDC_EDIT1)->EnableWindow(FALSE);
 	GetDlgItem(IDC_EDIT2)->EnableWindow(FALSE);
 	GetDlgItem(IDC_EDIT3)->EnableWindow(TRUE);
+	temp = 3;
 	// TODO: 在此添加控件通知处理程序代码
 }
 
@@ -102,12 +105,57 @@ void CPECalcu::OnBnClickedCalcu()
 	}
 	//判断PE头部
 	DWORD dwNewPos = (DWORD)pFileBuf + ((PIMAGE_DOS_HEADER)pFileBuf)->e_lfanew;
-	PIMAGE_NT_HEADERS32 m_pNt = (PIMAGE_NT_HEADERS32)(dwNewPos);
+	m_pNt = (PIMAGE_NT_HEADERS32)(dwNewPos);
 	
 	PIMAGE_FILE_HEADER pFileHeader = &(m_pNt->FileHeader);
 	PIMAGE_OPTIONAL_HEADER32 pOptionalHeader = &(m_pNt->OptionalHeader);
-	//PIMAGE_OPTIONAL_HEADER64
 
+	//PIMAGE_OPTIONAL_HEADER64
+	CString temp1("0x");
+	int temp2 = 0;
+	DWORD temp3 = 0;
+	UpdateData(TRUE);//获取变量值
+	switch (temp) {
+	case 1://输入的是VA
+		temp1 += m_VA;
+		StrToIntEx(temp1, STIF_SUPPORT_HEX, &temp2);
+		temp3 = temp2;
+
+		m_RVA.Format(L"%x",VAtoRVA(temp3));
+		m_FOA.Format(L"%x", VAtoFOA(temp3));
+		break;
+	case 2://输入的是RVA
+		temp1 += m_RVA;
+		StrToIntEx(temp1, STIF_SUPPORT_HEX, &temp2);
+		temp3 = temp2;
+		m_VA.Format(L"%x",RVAtoVA(temp3));
+		m_FOA.Format(L"%x", RVAtoFOA(temp3));
+		break;
+	case 3://输入的是FOA
+		temp1 += m_FOA;
+		StrToIntEx(temp1, STIF_SUPPORT_HEX, &temp2);
+		temp3 = temp2;
+
+		m_VA.Format(L"%x", FOAtoVA(temp3));
+		m_RVA.Format(L"%x", FOAtoRVA(temp3));
+		break;
+	}
+	UpdateData(FALSE);
+
+
+
+	delete[] pFileBuf;
+	CloseHandle(hFile);
+}
+
+DWORD CPECalcu::VAtoFOA(DWORD VA)
+{
+	return RVAtoFOA(VA - m_pNt->OptionalHeader.ImageBase);
+}
+
+DWORD CPECalcu::VAtoRVA(DWORD VA)
+{
+	return VA- m_pNt->OptionalHeader.ImageBase;
 }
 
 DWORD CPECalcu::RVAtoFOA(DWORD dwRVA)
@@ -125,7 +173,39 @@ DWORD CPECalcu::RVAtoFOA(DWORD dwRVA)
 		if (dwRVA >= pSec->VirtualAddress&&dwRVA < pSec->VirtualAddress + dwRealVirSize) {
 			return dwRVA - pSec->VirtualAddress + pSec->PointerToRawData;
 		}
+		pSec++;
 	}
 }
+
+DWORD CPECalcu::FOAtoRVA(DWORD dwRVA)
+{
+	 
+	//先判断在文件中哪个区段内
+	//得到区段的起始相对虚拟地址
+	int nCountOfSection = m_pNt->FileHeader.NumberOfSections;
+	PIMAGE_SECTION_HEADER pSec = IMAGE_FIRST_SECTION(m_pNt);
+	if (dwRVA < pSec->PointerToRawData)
+		return dwRVA;
+	DWORD dwSectionAligment = m_pNt->OptionalHeader.SectionAlignment;
+	for (int i = 0;i < nCountOfSection;i++) {
+		if (dwRVA >= pSec->PointerToRawData&&dwRVA < pSec->PointerToRawData + pSec->SizeOfRawData) {
+			return dwRVA + pSec->VirtualAddress - pSec->PointerToRawData;
+		}
+		pSec++;
+	}
+	return 0;
+}
+
+DWORD CPECalcu::RVAtoVA(DWORD dwRVA)
+{
+	return dwRVA+m_pNt->OptionalHeader.ImageBase;
+}
+
+DWORD CPECalcu::FOAtoVA(DWORD dwFOA)
+{
+	return RVAtoVA(FOAtoRVA(dwFOA));
+}
+
+
 
 
