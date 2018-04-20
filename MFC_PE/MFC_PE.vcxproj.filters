@@ -39,6 +39,12 @@
     <ClInclude Include="PECalcu.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DirecList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionSpace.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -54,6 +60,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="PECalcu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DirecList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionSpace.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

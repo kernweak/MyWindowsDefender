@@ -6,6 +6,8 @@
 #include<string>
 #include<iomanip>
 #include"PECalcu.h"
+#include"DirecList.h"
+#include"SectionSpace.h"
 using namespace std;
 extern void DirectoryString(DWORD dwIndex);
 
@@ -16,6 +18,7 @@ class CPEeditor : public CDialogEx
 	DECLARE_DYNAMIC(CPEeditor)
 
 public:
+	CPEeditor(PIMAGE_NT_HEADERS32 pnt,CWnd* pParent = NULL);
 	CPEeditor(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CPEeditor();
 
@@ -29,6 +32,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()
 public:
+	PIMAGE_NT_HEADERS32 m_pNt;
 	CString m_PEload;//文件的路径
 	void showPE();
 	CString m_AddressOfEntryPoint;
@@ -48,4 +52,8 @@ public:
 	CString m_SizeOfOptionalHeader;
 	CString m_NumberOfRvaAndSizes;
 	afx_msg void OnBnClickedCalcu();
+	afx_msg void OnBnClickedGetTime();
+	afx_msg void OnBnClickedDirecList();
+	afx_msg void OnStnClickedStatic8();
+	afx_msg void OnBnClickedSection();
 };

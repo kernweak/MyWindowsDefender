@@ -67,7 +67,7 @@ BEGIN_MESSAGE_MAP(CMFC_PEDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_DROPFILES()
-	ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedConfirm)
+	//ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedConfirm)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMFC_PEDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
@@ -170,7 +170,7 @@ void CMFC_PEDlg::OnDropFiles(HDROP hDropInfo)
 		DragQueryFile(hDropInfo, i, wcStr, MAX_PATH);//获得拖拽的第i个文件的文件名
 		//需要做的事情
 		m_PEload = wcStr;
-		CPEeditor EPeditor1;
+		CPEeditor EPeditor1(m_pNt);
 		EPeditor1.m_PEload = m_PEload;
 		EPeditor1.DoModal();
 		DragFinish(hDropInfo); //拖拽结束后，释放内存
@@ -178,14 +178,14 @@ void CMFC_PEDlg::OnDropFiles(HDROP hDropInfo)
 }
 
 
-void CMFC_PEDlg::OnBnClickedConfirm()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	UpdateData(TRUE);
-	CPEeditor EPeditor1;
-	EPeditor1.m_PEload = m_PEload;
-	EPeditor1.DoModal();
-}
+//void CMFC_PEDlg::OnBnClickedConfirm()
+//{
+//	// TODO: 在此添加控件通知处理程序代码
+//	UpdateData(TRUE);
+//	CPEeditor EPeditor1;
+//	EPeditor1.m_PEload = m_PEload;
+//	EPeditor1.DoModal();
+//}
 
 
 void CMFC_PEDlg::OnBnClickedButton2()
@@ -208,7 +208,35 @@ void CMFC_PEDlg::OnBnClickedButton2()
 	ofn.lpstrInitialDir = szDir;
 	GetOpenFileName(&ofn);
 	m_PEload = ofn.lpstrFile;
-	CPEeditor EPeditor1;
+	m_pNt=getPNT(m_PEload);
+	//点击确定跳出
+	CPEeditor EPeditor1(m_pNt);
 	EPeditor1.m_PEload = m_PEload;
 	EPeditor1.DoModal();
+}
+
+PIMAGE_NT_HEADERS32 CMFC_PEDlg::getPNT(CString m_PEload)
+{
+	//获取文件句柄
+	HANDLE hFile = CreateFile((m_PEload.GetBuffer()), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	//获取文件大小
+	DWORD dwFileSize = GetFileSize(hFile, NULL);
+	//创建一个堆空间存放
+	CHAR *pFileBuf = new CHAR[dwFileSize];
+
+	DWORD ReadFileSize = 0;
+	//将文件读入内存
+	ReadFile(hFile, pFileBuf, dwFileSize, &ReadFileSize, NULL);
+	//判断DOS头
+	PIMAGE_DOS_HEADER pFile = (PIMAGE_DOS_HEADER)pFileBuf;
+	if (pFile->e_magic != IMAGE_DOS_SIGNATURE) {//0x5A4D
+		cout << "这不是一个PE文件" << endl;
+		return 0;
+	}
+	//判断PE头部
+	DWORD dwNewPos = (DWORD)pFileBuf + ((PIMAGE_DOS_HEADER)pFileBuf)->e_lfanew;
+	PIMAGE_NT_HEADERS32 pNTHeader = (PIMAGE_NT_HEADERS32)(dwNewPos);
+	CloseHandle(hFile);
+	return pNTHeader;
+
 }

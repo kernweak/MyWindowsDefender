@@ -185,19 +185,23 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirecList.h" />
     <ClInclude Include="MFC_PE.h" />
     <ClInclude Include="MFC_PEDlg.h" />
     <ClInclude Include="PECalcu.h" />
     <ClInclude Include="PEeditor.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SectionSpace.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirecList.cpp" />
     <ClCompile Include="MFC_PE.cpp" />
     <ClCompile Include="MFC_PEDlg.cpp" />
     <ClCompile Include="PECalcu.cpp" />
     <ClCompile Include="PEeditor.cpp" />
+    <ClCompile Include="SectionSpace.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

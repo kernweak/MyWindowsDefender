@@ -11,8 +11,33 @@
 
 IMPLEMENT_DYNAMIC(CPEeditor, CDialogEx)
 
+CPEeditor::CPEeditor(PIMAGE_NT_HEADERS32 pnt,CWnd* pParent /*=NULL*/)
+	: CDialogEx(IDD_DIALOGPEeditor, pParent)
+	, m_pNt(pnt)
+	, m_PEload(_T(""))
+	, m_AddressOfEntryPoint(_T(""))
+	, m_ImageBase(_T(""))
+	, m_SizeOfImage(_T(""))
+	, m_BaseOfCode(_T(""))
+	, m_BaseOfData(_T(""))
+	, m_SectionAlignment(_T(""))
+	, m_FileAlignment(_T(""))
+	, m_Magic(_T(""))
+	, m_Subsystem(_T(""))
+	, m_NumberOfSections(_T(""))
+	, m_TimeDateStamp(_T(""))
+	, m_SizeOfHeaders(_T(""))
+	, m_DllCharacteristics(_T(""))
+	, m_CheckSum(_T(""))
+	, m_SizeOfOptionalHeader(_T(""))
+	, m_NumberOfRvaAndSizes(_T(""))
+{
+}
+
+
 CPEeditor::CPEeditor(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOGPEeditor, pParent)
+	//, m_pNt(pnt)
 	, m_PEload(_T(""))
 	, m_AddressOfEntryPoint(_T(""))
 	, m_ImageBase(_T(""))
@@ -35,6 +60,7 @@ CPEeditor::CPEeditor(CWnd* pParent /*=NULL*/)
 
 CPEeditor::~CPEeditor()
 {
+
 }
 
 void CPEeditor::DoDataExchange(CDataExchange* pDX)
@@ -70,8 +96,9 @@ BOOL CPEeditor::OnInitDialog()
 void CPEeditor::showPE()
 
 {
+	_TCHAR* temp = m_PEload.GetBuffer();
 	//获取文件句柄
-	HANDLE hFile = CreateFile((m_PEload.GetBuffer()), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(temp, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	//获取文件大小
 	DWORD dwFileSize = GetFileSize(hFile, NULL);
 	//创建一个堆空间存放
@@ -123,6 +150,10 @@ void CPEeditor::showPE()
 
 BEGIN_MESSAGE_MAP(CPEeditor, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON4, &CPEeditor::OnBnClickedCalcu)
+	ON_BN_CLICKED(IDC_BUTTON5, &CPEeditor::OnBnClickedGetTime)
+	ON_BN_CLICKED(IDC_BUTTON3, &CPEeditor::OnBnClickedDirecList)
+	ON_STN_CLICKED(IDC_STATIC8, &CPEeditor::OnStnClickedStatic8)
+	ON_BN_CLICKED(IDC_BUTTON2, &CPEeditor::OnBnClickedSection)
 END_MESSAGE_MAP()
 
 
@@ -136,4 +167,39 @@ void CPEeditor::OnBnClickedCalcu()
 	Calcu.m_PEload = m_PEload;
 	Calcu.DoModal();
 	
+}
+
+
+void CPEeditor::OnBnClickedGetTime()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+	time_t dwTime = m_pNt->FileHeader.TimeDateStamp;
+	struct tm Filetime;
+	gmtime_s(&Filetime, (time_t*)&dwTime);
+	CString strTime = {};
+	strTime.Format(_T("%4d/%02d/%02d /%02d:/%02d:/%02d:"), Filetime.tm_year + 1900, Filetime.tm_mon + 1, Filetime.tm_mday, Filetime.tm_hour, Filetime.tm_min, Filetime.tm_sec);
+	MessageBox(strTime, _T("时间"), MB_OK);
+}
+
+
+void CPEeditor::OnBnClickedDirecList()
+{
+	CDirecList direcL(m_pNt);
+	direcL.DoModal();
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CPEeditor::OnStnClickedStatic8()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CPEeditor::OnBnClickedSection()
+{
+	// TODO: 在此添加控件通知处理程序代码
+    CSectionSpace dwSect(m_pNt);
+    dwSect.DoModal();
 }

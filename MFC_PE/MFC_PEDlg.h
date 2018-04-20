@@ -34,6 +34,8 @@ protected:
 public:
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	CString m_PEload;//文件的路径
-	afx_msg void OnBnClickedConfirm();
+	//afx_msg void OnBnClickedConfirm();
 	afx_msg void OnBnClickedButton2();
+	PIMAGE_NT_HEADERS32 m_pNt;
+	PIMAGE_NT_HEADERS32 getPNT(CString m_PEload);
 };
