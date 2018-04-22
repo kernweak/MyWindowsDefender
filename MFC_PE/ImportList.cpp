@@ -115,8 +115,35 @@ void CImportList::showImport()
 	 LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	 // TODO: 在此添加控件通知处理程序代码
 	 *pResult = 0;
-	 int temp = pNMItemActivate->iItem;
-	 temp2 = m_ListCtrl.GetItemText(temp, 5);
-
-	 int a;
+	 int nCount = -1;
+	 CPECalcu temp1(m_pNt);
+	 NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	 if (pNMListView->iItem != -1)
+	 {
+		 nCount = pNMListView->iItem;
+		 int temp = pNMItemActivate->iItem;
+		 temp2= m_ListCtrl.GetItemText(temp, 5);
+		 DWORD dwFirstRVA= _wtoi(temp2);
+		 PIMAGE_THUNK_DATA  pFirsThunk =
+			 (PIMAGE_THUNK_DATA)(temp1.RVAtoFOA(dwFirstRVA) + m_pFileBuf);
+		 m_CListCtrl2.DeleteAllItems();
+		 while (pFirsThunk->u1.AddressOfData)
+		 {
+			 //判断导入方式
+			 if (IMAGE_SNAP_BY_ORDINAL32(pFirsThunk->u1.AddressOfData))
+			 {
+				 //说明是序号导入(低16位是其序号)
+				 printf("\t\t%04X \n", pFirsThunk->u1.Ordinal & 0xFFFF);
+			 }
+			 else
+			 {
+				 //名称导入
+				 PIMAGE_IMPORT_BY_NAME pImportName =
+					 (PIMAGE_IMPORT_BY_NAME)(temp1.RVAtoFOA(pFirsThunk->u1.AddressOfData) + m_pFileBuf);
+				 printf("\t\t%04X %s \n", pImportName->Hint, pImportName->Name);
+			 }
+			 //
+			 pFirsThunk++;
+		 }
+	 }
  }
