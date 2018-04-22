@@ -11,9 +11,10 @@
 
 IMPLEMENT_DYNAMIC(CDirecList, CDialogEx)
 
-CDirecList::CDirecList(PIMAGE_NT_HEADERS32 pnt,CWnd* pParent /*=NULL*/)
+CDirecList::CDirecList(PIMAGE_NT_HEADERS32 pnt, BYTE *FileBuf,CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIADIRECLIST, pParent),
-	m_pNt(pnt)
+	m_pNt(pnt),
+	m_pFileBuf(FileBuf)
 	, m_EXPORT_DIRECTORY_RVA(_T(""))
 	, m_EXPORT_DIRECTORY_Size(_T(""))
 	, m_IMPORT_DIREC_RVA(_T(""))
@@ -137,7 +138,17 @@ void CDirecList::ShowDirecList()
 
 
 BEGIN_MESSAGE_MAP(CDirecList, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON1, &CDirecList::OnBnClickedImportList)
 END_MESSAGE_MAP()
 
 
 // CDirecList 消息处理程序
+
+
+void CDirecList::OnBnClickedImportList()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CImportList templist(m_pNt, m_pFileBuf,this);
+	templist.DoModal();
+
+}

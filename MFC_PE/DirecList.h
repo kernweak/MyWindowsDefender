@@ -1,5 +1,5 @@
 #pragma once
-
+#include "ImportList.h"
 
 // CDirecList 对话框
 
@@ -8,7 +8,7 @@ class CDirecList : public CDialogEx
 	DECLARE_DYNAMIC(CDirecList)
 
 public:
-	CDirecList(PIMAGE_NT_HEADERS32 pnt,CWnd* pParent = NULL);   // 标准构造函数
+	CDirecList(PIMAGE_NT_HEADERS32 pnt, BYTE *FileBuf,CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDirecList();
 
 // 对话框数据
@@ -54,4 +54,6 @@ public:
 	CString m_SAVE_RVA;
 	CString m_SAVE_Size;
 	void ShowDirecList();
+	afx_msg void OnBnClickedImportList();
+	BYTE *m_pFileBuf;
 };

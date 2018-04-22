@@ -8,7 +8,7 @@ class CPECalcu : public CDialogEx
 	DECLARE_DYNAMIC(CPECalcu)
 
 public:
-	CPECalcu(CWnd* pParent = NULL);   // 标准构造函数
+	CPECalcu(PIMAGE_NT_HEADERS32 pnt,CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CPECalcu();
 
 // 对话框数据

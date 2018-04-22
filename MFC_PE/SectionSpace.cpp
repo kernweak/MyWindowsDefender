@@ -50,6 +50,8 @@ BOOL CSectionSpace::OnInitDialog()
 	m_ListCtrl.InsertColumn(4, _T("RSIZE"), LVCFMT_CENTER, 200, -1);
 	m_ListCtrl.InsertColumn(5, _T("±Í÷æ"), LVCFMT_CENTER, 200, -1);
 
+
+
 	PIMAGE_SECTION_HEADER pSectionHeader = IMAGE_FIRST_SECTION(m_pNt);
 	int i = 0;
 	LV_ITEM li = {};

@@ -13,8 +13,9 @@ using namespace std;
 
 IMPLEMENT_DYNAMIC(CPECalcu, CDialogEx)
 
-CPECalcu::CPECalcu(CWnd* pParent /*=NULL*/)
-	: CDialogEx(IDD_DIACALCU, pParent)
+CPECalcu::CPECalcu(PIMAGE_NT_HEADERS32 pnt,CWnd* pParent /*=NULL*/)
+	: CDialogEx(IDD_DIACALCU, pParent),
+	m_pNt(pnt)
 	, m_VA(_T(""))
 	, m_RVA(_T(""))
 	, m_FOA(_T(""))
@@ -87,25 +88,25 @@ BOOL CPECalcu::OnInitDialog()
 
 void CPECalcu::OnBnClickedCalcu()
 {
-	// TODO: 在此添加控件通知处理程序代码
-	HANDLE hFile = CreateFile((m_PEload.GetBuffer()), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	//获取文件大小
-	DWORD dwFileSize = GetFileSize(hFile, NULL);
-	//创建一个堆空间存放
-	CHAR *pFileBuf = new CHAR[dwFileSize];
-
-	DWORD ReadFileSize = 0;
-	//将文件读入内存
-	ReadFile(hFile, pFileBuf, dwFileSize, &ReadFileSize, NULL);
-	//判断DOS头
-	PIMAGE_DOS_HEADER pFile = (PIMAGE_DOS_HEADER)pFileBuf;
-	if (pFile->e_magic != IMAGE_DOS_SIGNATURE) {//0x5A4D
-		cout << "这不是一个PE文件" << endl;
-		return;
-	}
-	//判断PE头部
-	DWORD dwNewPos = (DWORD)pFileBuf + ((PIMAGE_DOS_HEADER)pFileBuf)->e_lfanew;
-	m_pNt = (PIMAGE_NT_HEADERS32)(dwNewPos);
+//	// TODO: 在此添加控件通知处理程序代码
+//	HANDLE hFile = CreateFile((m_PEload.GetBuffer()), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+//	//获取文件大小
+//	DWORD dwFileSize = GetFileSize(hFile, NULL);
+//	//创建一个堆空间存放
+//	CHAR *pFileBuf = new CHAR[dwFileSize];
+//
+//	DWORD ReadFileSize = 0;
+//	//将文件读入内存
+//	ReadFile(hFile, pFileBuf, dwFileSize, &ReadFileSize, NULL);
+//	//判断DOS头
+//	PIMAGE_DOS_HEADER pFile = (PIMAGE_DOS_HEADER)pFileBuf;
+//	if (pFile->e_magic != IMAGE_DOS_SIGNATURE) {//0x5A4D
+//		cout << "这不是一个PE文件" << endl;
+//		return;
+//	}
+//	//判断PE头部
+//	DWORD dwNewPos = (DWORD)pFileBuf + ((PIMAGE_DOS_HEADER)pFileBuf)->e_lfanew;
+//	m_pNt = (PIMAGE_NT_HEADERS32)(dwNewPos);
 	
 	PIMAGE_FILE_HEADER pFileHeader = &(m_pNt->FileHeader);
 	PIMAGE_OPTIONAL_HEADER32 pOptionalHeader = &(m_pNt->OptionalHeader);
@@ -144,8 +145,8 @@ void CPECalcu::OnBnClickedCalcu()
 
 
 
-	delete[] pFileBuf;
-	CloseHandle(hFile);
+//	delete[] pFileBuf;
+//	CloseHandle(hFile);
 }
 
 DWORD CPECalcu::VAtoFOA(DWORD VA)
@@ -166,15 +167,14 @@ DWORD CPECalcu::RVAtoFOA(DWORD dwRVA)
 	int nCountOfSection = m_pNt->FileHeader.NumberOfSections;
 	PIMAGE_SECTION_HEADER pSec = IMAGE_FIRST_SECTION(m_pNt);
 	DWORD dwSectionAligment = m_pNt->OptionalHeader.SectionAlignment;
-	for (int i = 0;i < nCountOfSection;i++) {
-		//求在内存的真实大小
-		DWORD dwRealVirSize = pSec->Misc.VirtualSize%dwSectionAligment ?
-			pSec->Misc.VirtualSize%dwSectionAligment*dwSectionAligment + dwSectionAligment : pSec->Misc.VirtualSize;
-		if (dwRVA >= pSec->VirtualAddress&&dwRVA < pSec->VirtualAddress + dwRealVirSize) {
-			return dwRVA - pSec->VirtualAddress + pSec->PointerToRawData;
-		}
+	while (!(dwRVA>=pSec->VirtualAddress&&dwRVA<pSec->VirtualAddress+pSec->Misc.VirtualSize)){
 		pSec++;
+		if (pSec->PointerToRawData == 0) {
+			return 0;
+		}
+
 	}
+	return dwRVA - pSec->VirtualAddress + pSec->PointerToRawData;
 }
 
 DWORD CPECalcu::FOAtoRVA(DWORD dwRVA)

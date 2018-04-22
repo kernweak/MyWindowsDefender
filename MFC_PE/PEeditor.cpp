@@ -102,19 +102,19 @@ void CPEeditor::showPE()
 	//获取文件大小
 	DWORD dwFileSize = GetFileSize(hFile, NULL);
 	//创建一个堆空间存放
-	CHAR *pFileBuf = new CHAR[dwFileSize];
+	m_pFileBuf = new BYTE[dwFileSize];
 
 	DWORD ReadFileSize = 0;
 	//将文件读入内存
-	ReadFile(hFile, pFileBuf, dwFileSize, &ReadFileSize, NULL);
+	ReadFile(hFile, m_pFileBuf, dwFileSize, &ReadFileSize, NULL);
 	//判断DOS头
-	PIMAGE_DOS_HEADER pFile = (PIMAGE_DOS_HEADER)pFileBuf;
+	PIMAGE_DOS_HEADER pFile = (PIMAGE_DOS_HEADER)m_pFileBuf;
 	if (pFile->e_magic != IMAGE_DOS_SIGNATURE) {//0x5A4D
 		cout << "这不是一个PE文件" << endl;
 		return ;
 	}
 	//判断PE头部
-	DWORD dwNewPos = (DWORD)pFileBuf + ((PIMAGE_DOS_HEADER)pFileBuf)->e_lfanew;
+	DWORD dwNewPos = (DWORD)m_pFileBuf + ((PIMAGE_DOS_HEADER)m_pFileBuf)->e_lfanew;
 	PIMAGE_NT_HEADERS32 pNTHeader = (PIMAGE_NT_HEADERS32)(dwNewPos);
 	if (pNTHeader->Signature != IMAGE_NT_SIGNATURE) {
 		cout << "这不是一个PE文件" << endl;
@@ -142,7 +142,7 @@ void CPEeditor::showPE()
 	m_SizeOfOptionalHeader.Format(L"%x", pNTHeader->FileHeader.SizeOfOptionalHeader);
 	m_NumberOfRvaAndSizes.Format(L"%x", pNTHeader->OptionalHeader.NumberOfRvaAndSizes);
 	//关闭句柄
-	delete[] pFileBuf;
+	//delete[] pFileBuf;
 	CloseHandle(hFile);
 	
 }
@@ -163,7 +163,7 @@ END_MESSAGE_MAP()
 void CPEeditor::OnBnClickedCalcu()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CPECalcu Calcu;
+	CPECalcu Calcu(m_pNt);
 	Calcu.m_PEload = m_PEload;
 	Calcu.DoModal();
 	
@@ -185,7 +185,7 @@ void CPEeditor::OnBnClickedGetTime()
 
 void CPEeditor::OnBnClickedDirecList()
 {
-	CDirecList direcL(m_pNt);
+	CDirecList direcL(m_pNt, m_pFileBuf);
 	direcL.DoModal();
 	// TODO: 在此添加控件通知处理程序代码
 }

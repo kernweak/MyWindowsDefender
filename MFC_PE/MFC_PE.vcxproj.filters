@@ -45,6 +45,9 @@
     <ClInclude Include="SectionSpace.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ImportList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -66,6 +69,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SectionSpace.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportList.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

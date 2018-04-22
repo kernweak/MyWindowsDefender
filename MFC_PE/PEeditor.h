@@ -56,4 +56,5 @@ public:
 	afx_msg void OnBnClickedDirecList();
 	afx_msg void OnStnClickedStatic8();
 	afx_msg void OnBnClickedSection();
+	BYTE* m_pFileBuf;
 };
