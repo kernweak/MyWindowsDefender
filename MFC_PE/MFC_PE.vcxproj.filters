@@ -48,6 +48,9 @@
     <ClInclude Include="ImportList.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DiaExportList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -72,6 +75,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ImportList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiaExportList.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

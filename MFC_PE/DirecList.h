@@ -1,5 +1,6 @@
 #pragma once
 #include "ImportList.h"
+#include"DiaExportList.h"
 
 // CDirecList ¶Ô»°¿ò
 
@@ -56,4 +57,6 @@ public:
 	void ShowDirecList();
 	afx_msg void OnBnClickedImportList();
 	BYTE *m_pFileBuf;
+	afx_msg void OnBnClickedExport();
+	afx_msg void OnBnClickedExportList();
 };

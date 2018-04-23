@@ -139,6 +139,8 @@ void CDirecList::ShowDirecList()
 
 BEGIN_MESSAGE_MAP(CDirecList, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CDirecList::OnBnClickedImportList)
+	ON_BN_CLICKED(IDC_BUTTON2, &CDirecList::OnBnClickedExport)
+	ON_BN_CLICKED(IDC_BUTTON3, &CDirecList::OnBnClickedExportList)
 END_MESSAGE_MAP()
 
 
@@ -151,4 +153,19 @@ void CDirecList::OnBnClickedImportList()
 	CImportList templist(m_pNt, m_pFileBuf,this);
 	templist.DoModal();
 
+}
+
+
+void CDirecList::OnBnClickedExport()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+}
+
+
+void CDirecList::OnBnClickedExportList()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaExportList tempExport(m_pNt, m_pFileBuf);
+	tempExport.DoModal();
 }
