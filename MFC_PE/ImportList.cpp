@@ -121,14 +121,48 @@ void CImportList::showImport()
 	 if (pNMListView->iItem != -1)
 	 {
 		 nCount = pNMListView->iItem;
-		 int temp = pNMItemActivate->iItem;
+		 int temp = pNMItemActivate->iItem;//点了第几行
+		 int count = temp;
+
+		 DWORD dwImportRVA = m_pNt->OptionalHeader.DataDirectory[1].VirtualAddress;
+		 //找到在文件中的位置
+		 DWORD T = temp1.RVAtoFOA(dwImportRVA);
+		 //DWORD dwImportInfile = DWORD((char*)m_pFileBuf+T);
+		 PIMAGE_IMPORT_DESCRIPTOR pImport = (PIMAGE_IMPORT_DESCRIPTOR)(m_pFileBuf + T);
+		 DWORD OriginalFT = 0;//存放pImport->OriginalFirstThunk
+		 while (pImport->Name) {
+			 if (count == 0) {
+				 OriginalFT = pImport->OriginalFirstThunk;
+				 break;
+			}
+			 count--;
+			 pImport++;
+		 }
 		 temp2= m_ListCtrl.GetItemText(temp, 5);
-		 DWORD dwFirstRVA= _wtoi(temp2);
+		 DWORD dwFirstRVA;
+		 //dwFirstRVA = _wtoi(temp2);
+
+		 swscanf_s(temp2.GetBuffer(), L"%x", &dwFirstRVA);
+		 int i = 0;
+		 DWORD dwFOA = temp1.RVAtoFOA(dwFirstRVA);
 		 PIMAGE_THUNK_DATA  pFirsThunk =
 			 (PIMAGE_THUNK_DATA)(temp1.RVAtoFOA(dwFirstRVA) + m_pFileBuf);
 		 m_CListCtrl2.DeleteAllItems();
 		 while (pFirsThunk->u1.AddressOfData)
 		 {
+			 CString strf;
+			 strf.Format(L"%08X", OriginalFT);
+
+			 m_CListCtrl2.InsertItem(i, strf);//插入ThankRVA
+			 OriginalFT += 4;
+			 CString strf1;
+			 strf1.Format(L"%08X", dwFOA);
+			 m_CListCtrl2.SetItemText(i, 1, strf1);//FOA值
+			 dwFOA += 4;
+
+			 CString strf2;
+			 strf2.Format(L"%08X", pFirsThunk->u1.AddressOfData);
+			 m_CListCtrl2.SetItemText(i, 2, strf2);//FOA值
 			 //判断导入方式
 			 if (IMAGE_SNAP_BY_ORDINAL32(pFirsThunk->u1.AddressOfData))
 			 {
@@ -139,10 +173,16 @@ void CImportList::showImport()
 			 {
 				 //名称导入
 				 PIMAGE_IMPORT_BY_NAME pImportName =
-					 (PIMAGE_IMPORT_BY_NAME)(temp1.RVAtoFOA(pFirsThunk->u1.AddressOfData) + m_pFileBuf);
-				 printf("\t\t%04X %s \n", pImportName->Hint, pImportName->Name);
+					 (PIMAGE_IMPORT_BY_NAME)(temp1.RVAtoFOA(pFirsThunk->u1.AddressOfData) + m_pFileBuf );
+				 //printf("\t\t%04X %s \n", pImportName->Hint, pImportName->Name);
+				 CString strint;
+				 strint.Format(L"%04X", pImportName->Hint);
+				 m_CListCtrl2.SetItemText(i, 3, strint);//插入序号
+				 CString strn(pImportName->Name);
+				 m_CListCtrl2.SetItemText(i, 4, strn);//插入name
 			 }
 			 //
+			 i++;
 			 pFirsThunk++;
 		 }
 	 }
