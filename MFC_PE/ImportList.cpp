@@ -140,11 +140,11 @@ void CImportList::showImport()
 		 }
 		 temp2= m_ListCtrl.GetItemText(temp, 5);
 		 DWORD dwFirstRVA;
-		 //dwFirstRVA = _wtoi(temp2);
+		 //dwFirstRVA = _wtoi(temp2); 
 
 		 swscanf_s(temp2.GetBuffer(), L"%x", &dwFirstRVA);
 		 int i = 0;
-		 DWORD dwFOA = temp1.RVAtoFOA(dwFirstRVA);
+		 DWORD dwFOA = temp1.RVAtoFOA(OriginalFT);
 		 PIMAGE_THUNK_DATA  pFirsThunk =
 			 (PIMAGE_THUNK_DATA)(temp1.RVAtoFOA(dwFirstRVA) + m_pFileBuf);
 		 m_CListCtrl2.DeleteAllItems();
@@ -156,8 +156,11 @@ void CImportList::showImport()
 			 m_CListCtrl2.InsertItem(i, strf);//≤Â»ÎThankRVA
 			 OriginalFT += 4;
 			 CString strf1;
+		// strf1.Format(L"%08X", dwFOA);
+		// m_CListCtrl2.SetItemText(i, 1, strf1);//FOA÷µ\
+		//	 dwFOA += 4;
 			 strf1.Format(L"%08X", dwFOA);
-			 m_CListCtrl2.SetItemText(i, 1, strf1);//FOA÷µ
+			 m_CListCtrl2.SetItemText(i, 1, strf1);
 			 dwFOA += 4;
 
 			 CString strf2;
