@@ -59,4 +59,8 @@ public:
 	BYTE *m_pFileBuf;
 	afx_msg void OnBnClickedExport();
 	afx_msg void OnBnClickedExportList();
+	afx_msg void OnBnClickedResourceList();
+	afx_msg void OnBnClickedRelocList();
+	afx_msg void OnBnClickedTLS();
+	afx_msg void OnBnClickedDelay();
 };

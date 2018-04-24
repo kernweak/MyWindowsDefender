@@ -51,6 +51,18 @@
     <ClInclude Include="DiaExportList.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DiaResourceList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DiaRelocList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DiaTLS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DiaDelay.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -78,6 +90,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DiaExportList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiaResourceList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiaRelocList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiaTLS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiaDelay.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -185,7 +185,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DiaDelay.h" />
     <ClInclude Include="DiaExportList.h" />
+    <ClInclude Include="DiaRelocList.h" />
+    <ClInclude Include="DiaResourceList.h" />
+    <ClInclude Include="DiaTLS.h" />
     <ClInclude Include="DirecList.h" />
     <ClInclude Include="ImportList.h" />
     <ClInclude Include="MFC_PE.h" />
@@ -198,7 +202,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DiaDelay.cpp" />
     <ClCompile Include="DiaExportList.cpp" />
+    <ClCompile Include="DiaRelocList.cpp" />
+    <ClCompile Include="DiaResourceList.cpp" />
+    <ClCompile Include="DiaTLS.cpp" />
     <ClCompile Include="DirecList.cpp" />
     <ClCompile Include="ImportList.cpp" />
     <ClCompile Include="MFC_PE.cpp" />

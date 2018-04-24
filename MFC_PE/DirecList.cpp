@@ -5,7 +5,10 @@
 #include "MFC_PE.h"
 #include "DirecList.h"
 #include "afxdialogex.h"
-
+#include"DiaResourceList.h"
+#include"DiaRelocList.h"
+#include "DiaTLS.h"
+#include "DiaDelay.h"
 
 // CDirecList 对话框
 
@@ -141,6 +144,10 @@ BEGIN_MESSAGE_MAP(CDirecList, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CDirecList::OnBnClickedImportList)
 	ON_BN_CLICKED(IDC_BUTTON2, &CDirecList::OnBnClickedExport)
 	ON_BN_CLICKED(IDC_BUTTON3, &CDirecList::OnBnClickedExportList)
+	ON_BN_CLICKED(IDC_BUTTON4, &CDirecList::OnBnClickedResourceList)
+	ON_BN_CLICKED(IDC_BUTTON5, &CDirecList::OnBnClickedRelocList)
+	ON_BN_CLICKED(IDC_BUTTON7, &CDirecList::OnBnClickedTLS)
+	ON_BN_CLICKED(IDC_BUTTON8, &CDirecList::OnBnClickedDelay)
 END_MESSAGE_MAP()
 
 
@@ -168,4 +175,37 @@ void CDirecList::OnBnClickedExportList()
 	// TODO: 在此添加控件通知处理程序代码
 	CDiaExportList tempExport(m_pNt, m_pFileBuf);
 	tempExport.DoModal();
+}
+
+
+void CDirecList::OnBnClickedResourceList()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaResourceList temp3(m_pNt, m_pFileBuf);
+	temp3.DoModal();
+
+}
+
+
+void CDirecList::OnBnClickedRelocList()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaRelocList temp4(m_pNt, m_pFileBuf);
+	temp4.DoModal();
+}
+
+
+void CDirecList::OnBnClickedTLS()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaTLS temp5(m_pNt, m_pFileBuf);
+	temp5.DoModal();
+}
+
+
+void CDirecList::OnBnClickedDelay()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaDelay temp5(m_pNt, m_pFileBuf);
+	temp5.DoModal();
 }
