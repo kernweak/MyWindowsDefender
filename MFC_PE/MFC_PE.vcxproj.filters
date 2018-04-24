@@ -63,6 +63,9 @@
     <ClInclude Include="DiaDelay.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DiaTask.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -102,6 +105,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DiaDelay.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiaTask.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

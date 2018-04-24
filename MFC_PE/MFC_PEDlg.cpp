@@ -6,6 +6,7 @@
 #include "MFC_PE.h"
 #include "MFC_PEDlg.h"
 #include "afxdialogex.h"
+#include "DiaTask.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,6 +70,7 @@ BEGIN_MESSAGE_MAP(CMFC_PEDlg, CDialogEx)
 	ON_WM_DROPFILES()
 	//ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedConfirm)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMFC_PEDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -239,4 +241,12 @@ PIMAGE_NT_HEADERS32 CMFC_PEDlg::getPNT(CString m_PEload)
 	CloseHandle(hFile);
 	return pNTHeader;
 
+}
+
+
+void CMFC_PEDlg::OnBnClickedButton1()//按下任务管理器
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaTask temp1;
+	temp1.DoModal();
 }

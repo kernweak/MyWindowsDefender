@@ -38,4 +38,5 @@ public:
 	afx_msg void OnBnClickedButton2();
 	PIMAGE_NT_HEADERS32 m_pNt;
 	PIMAGE_NT_HEADERS32 getPNT(CString m_PEload);
+	afx_msg void OnBnClickedButton1();
 };

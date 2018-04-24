@@ -76,4 +76,6 @@ BEGIN_MESSAGE_MAP(CDiaDelay, CDialogEx)
 END_MESSAGE_MAP()
 
 
+
+
 // CDiaDelay 消息处理程序
