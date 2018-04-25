@@ -7,6 +7,7 @@
 #include "MFC_PEDlg.h"
 #include "afxdialogex.h"
 #include "DiaTask.h"
+#include "DiaCPU.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,6 +72,7 @@ BEGIN_MESSAGE_MAP(CMFC_PEDlg, CDialogEx)
 	//ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedConfirm)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMFC_PEDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON3, &CMFC_PEDlg::OnBnClickedMCPU)
 END_MESSAGE_MAP()
 
 
@@ -249,4 +251,12 @@ void CMFC_PEDlg::OnBnClickedButton1()//按下任务管理器
 	// TODO: 在此添加控件通知处理程序代码
 	CDiaTask temp1;
 	temp1.DoModal();
+}
+
+
+void CMFC_PEDlg::OnBnClickedMCPU()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaCPU tempCpu;
+	tempCpu.DoModal();
 }

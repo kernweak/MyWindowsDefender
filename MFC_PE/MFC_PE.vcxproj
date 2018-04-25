@@ -185,6 +185,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DiaCPU.h" />
     <ClInclude Include="DiaDelay.h" />
     <ClInclude Include="DiaExportList.h" />
     <ClInclude Include="DiaRelocList.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DiaCPU.cpp" />
     <ClCompile Include="DiaDelay.cpp" />
     <ClCompile Include="DiaExportList.cpp" />
     <ClCompile Include="DiaRelocList.cpp" />

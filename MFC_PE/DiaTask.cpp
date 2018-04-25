@@ -121,7 +121,7 @@ void CDiaTask::showThreadE()
 
 void CDiaTask::showModuleE()
 {
-	m_Module.DeleteAllItems();
+	m_Module.DeleteAllItems( );
 	WORD n;
 	n = _wtoi(m_pocessID);
 	HANDLE hTool32 = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, n);
@@ -134,7 +134,7 @@ void CDiaTask::showModuleE()
 	// 2. 开始遍历进程
 	MODULEENTRY32 ti = { sizeof(MODULEENTRY32) };
 	BOOL bRet = Module32First(hTool32, &ti);
-	m_Module.InsertItem(0, ti.szModule);
+	         
 	if (!bRet)
 	{
 		printf("Thread32First error!\n");
