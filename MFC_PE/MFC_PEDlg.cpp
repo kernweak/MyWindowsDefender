@@ -258,5 +258,9 @@ void CMFC_PEDlg::OnBnClickedMCPU()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CDiaCPU tempCpu;
-	tempCpu.DoModal();
+	//tempCpu.m_Flag = 0;
+	//tempCpu.DoModal();
+	CDiaCPU *pTD = new CDiaCPU();
+	pTD->Create(IDD_DIACPU); //创建一个非模态对话框  
+	pTD->ShowWindow(SW_SHOWNORMAL);
 }

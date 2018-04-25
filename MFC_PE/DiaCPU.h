@@ -26,4 +26,9 @@ public:
 	CListCtrl m_Memory;
 	BOOL OnInitDialog();
 	void showCPUandMem();
+	afx_msg void OnBnClickedOk();
+	//int m_Flag = 0;
+	afx_msg void OnClose();
+	afx_msg void OnBnClickedCleanMem();
+	CString m_CleanMem;
 };

@@ -92,6 +92,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -188,6 +189,7 @@
     <ClInclude Include="DiaCPU.h" />
     <ClInclude Include="DiaDelay.h" />
     <ClInclude Include="DiaExportList.h" />
+    <ClInclude Include="DiaFile.h" />
     <ClInclude Include="DiaRelocList.h" />
     <ClInclude Include="DiaResourceList.h" />
     <ClInclude Include="DiaTask.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="DiaCPU.cpp" />
     <ClCompile Include="DiaDelay.cpp" />
     <ClCompile Include="DiaExportList.cpp" />
+    <ClCompile Include="DiaFile.cpp" />
     <ClCompile Include="DiaRelocList.cpp" />
     <ClCompile Include="DiaResourceList.cpp" />
     <ClCompile Include="DiaTask.cpp" />
