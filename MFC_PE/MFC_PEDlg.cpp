@@ -8,6 +8,8 @@
 #include "afxdialogex.h"
 #include "DiaTask.h"
 #include "DiaCPU.h"
+#include"DiaFile.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -73,6 +75,7 @@ BEGIN_MESSAGE_MAP(CMFC_PEDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMFC_PEDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMFC_PEDlg::OnBnClickedMCPU)
+	ON_BN_CLICKED(IDC_BUTTON4, &CMFC_PEDlg::OnBnClickedFile)
 END_MESSAGE_MAP()
 
 
@@ -263,4 +266,12 @@ void CMFC_PEDlg::OnBnClickedMCPU()
 	CDiaCPU *pTD = new CDiaCPU();
 	pTD->Create(IDD_DIACPU); //创建一个非模态对话框  
 	pTD->ShowWindow(SW_SHOWNORMAL);
+}
+
+
+void CMFC_PEDlg::OnBnClickedFile()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaFile tempFile;
+	tempFile.DoModal();
 }

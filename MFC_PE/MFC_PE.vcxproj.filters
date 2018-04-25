@@ -72,6 +72,9 @@
     <ClInclude Include="DiaFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Md5.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -120,6 +123,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DiaFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Md5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

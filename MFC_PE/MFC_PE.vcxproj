@@ -196,6 +196,7 @@
     <ClInclude Include="DiaTLS.h" />
     <ClInclude Include="DirecList.h" />
     <ClInclude Include="ImportList.h" />
+    <ClInclude Include="Md5.h" />
     <ClInclude Include="MFC_PE.h" />
     <ClInclude Include="MFC_PEDlg.h" />
     <ClInclude Include="PECalcu.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="DiaTLS.cpp" />
     <ClCompile Include="DirecList.cpp" />
     <ClCompile Include="ImportList.cpp" />
+    <ClCompile Include="Md5.cpp" />
     <ClCompile Include="MFC_PE.cpp" />
     <ClCompile Include="MFC_PEDlg.cpp" />
     <ClCompile Include="PECalcu.cpp" />
