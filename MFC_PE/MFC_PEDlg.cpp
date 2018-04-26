@@ -9,11 +9,54 @@
 #include "DiaTask.h"
 #include "DiaCPU.h"
 #include"DiaFile.h"
-
+#include"DiaServerAndRegister.h"
+#include <windows.h>
+#include <shlobj.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+
+
+BOOL    AddPrivilege(HANDLE hProcess, const TCHAR* pszPrivilegeName)
+{
+	// 进程的特权使用LUID值来表示, 因此, 需要先获取传入的权限名对应的LUID值
+
+
+	// 0. 获取特权对应的LUID值
+	LUID privilegeLuid;
+	if (!LookupPrivilegeValue(NULL, pszPrivilegeName, &privilegeLuid))
+		return FALSE;
+
+
+	// 1. 获取本进程令牌
+	HANDLE hToken = NULL;
+	// 打开令牌时, 需要加上TOKEN_ADJUST_PRIVILEGES 权限(这个权限用于修改令牌特权)
+	if (!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken)) {
+		printf("错误码:%x\n", GetLastError());
+		return 0;
+	}
+
+	// 2. 使用令牌特权修改函数将SeDebug的LUID特权值添加到本进程令牌
+	TOKEN_PRIVILEGES tokenPrivieges; // 新的特权
+
+									 // 使用特权的LUID来初始化结构体.
+	tokenPrivieges.PrivilegeCount = 1; // 特权个数
+	tokenPrivieges.Privileges[0].Luid = privilegeLuid; // 将特权LUID保存到数组中
+	tokenPrivieges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;// 将属性值设为启用(有禁用,移除等其他状态)
+
+
+
+																   // 调用函数添加特权
+	return AdjustTokenPrivileges(hToken,              // 要添加特权的令牌
+		FALSE,               // TRUE是移除特权, FALSE是添加特权
+		&tokenPrivieges,     // 要添加的特权数组
+		sizeof(tokenPrivieges),// 整个特权数组的大小
+		NULL,                // 旧的特权数组
+		NULL                  // 旧的特权数组的长度
+	);
+}
 
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
@@ -76,6 +119,7 @@ BEGIN_MESSAGE_MAP(CMFC_PEDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMFC_PEDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMFC_PEDlg::OnBnClickedMCPU)
 	ON_BN_CLICKED(IDC_BUTTON4, &CMFC_PEDlg::OnBnClickedFile)
+	ON_BN_CLICKED(IDC_BUTTON5, &CMFC_PEDlg::OnBnClickedRegister)
 END_MESSAGE_MAP()
 
 
@@ -274,4 +318,13 @@ void CMFC_PEDlg::OnBnClickedFile()
 	// TODO: 在此添加控件通知处理程序代码
 	CDiaFile tempFile;
 	tempFile.DoModal();
+}
+
+
+void CMFC_PEDlg::OnBnClickedRegister()
+{
+	bool ret=AddPrivilege(GetCurrentProcess(), SE_DEBUG_NAME/*字符串形式的权限名*/);
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaServerAndRegister tempServer;
+	tempServer.DoModal();
 }

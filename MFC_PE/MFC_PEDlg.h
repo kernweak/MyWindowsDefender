@@ -42,4 +42,5 @@ public:
 	afx_msg void OnBnClickedMCPU();
 	afx_msg void OnBnClickedFile();
 
+	afx_msg void OnBnClickedRegister();
 };

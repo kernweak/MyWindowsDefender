@@ -192,6 +192,7 @@
     <ClInclude Include="DiaFile.h" />
     <ClInclude Include="DiaRelocList.h" />
     <ClInclude Include="DiaResourceList.h" />
+    <ClInclude Include="DiaServerAndRegister.h" />
     <ClInclude Include="DiaTask.h" />
     <ClInclude Include="DiaTLS.h" />
     <ClInclude Include="DirecList.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="DiaFile.cpp" />
     <ClCompile Include="DiaRelocList.cpp" />
     <ClCompile Include="DiaResourceList.cpp" />
+    <ClCompile Include="DiaServerAndRegister.cpp" />
     <ClCompile Include="DiaTask.cpp" />
     <ClCompile Include="DiaTLS.cpp" />
     <ClCompile Include="DirecList.cpp" />
