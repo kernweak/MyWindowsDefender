@@ -186,6 +186,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientScoket.h" />
     <ClInclude Include="DiaCPU.h" />
     <ClInclude Include="DiaDelay.h" />
     <ClInclude Include="DiaExportList.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="DiaServerAndRegister.h" />
     <ClInclude Include="DiaTask.h" />
     <ClInclude Include="DiaTLS.h" />
+    <ClInclude Include="DiaVirus.h" />
     <ClInclude Include="DirecList.h" />
     <ClInclude Include="ImportList.h" />
     <ClInclude Include="Md5.h" />
@@ -208,6 +210,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientScoket.cpp" />
     <ClCompile Include="DiaCPU.cpp" />
     <ClCompile Include="DiaDelay.cpp" />
     <ClCompile Include="DiaExportList.cpp" />
@@ -217,6 +220,7 @@
     <ClCompile Include="DiaServerAndRegister.cpp" />
     <ClCompile Include="DiaTask.cpp" />
     <ClCompile Include="DiaTLS.cpp" />
+    <ClCompile Include="DiaVirus.cpp" />
     <ClCompile Include="DirecList.cpp" />
     <ClCompile Include="ImportList.cpp" />
     <ClCompile Include="Md5.cpp" />

@@ -78,6 +78,12 @@
     <ClInclude Include="DiaServerAndRegister.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DiaVirus.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientScoket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -132,6 +138,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DiaServerAndRegister.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiaVirus.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientScoket.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

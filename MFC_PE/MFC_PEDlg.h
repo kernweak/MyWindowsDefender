@@ -4,7 +4,7 @@
 
 #pragma once
 #include"PEeditor.h"
-
+#include"ClientScoket.h"
 // CMFC_PEDlg ¶Ô»°¿ò
 class CMFC_PEDlg : public CDialogEx
 {
@@ -43,4 +43,8 @@ public:
 	afx_msg void OnBnClickedFile();
 
 	afx_msg void OnBnClickedRegister();
+	afx_msg void OnBnClickedVirus();
+	void WhiteSave();
+
+	CClientScoket m_client;
 };

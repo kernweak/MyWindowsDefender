@@ -12,6 +12,12 @@
 #include"DiaServerAndRegister.h"
 #include <windows.h>
 #include <shlobj.h>
+#include <iostream>
+#include <fstream>
+#include <TlHelp32.h>
+#include"DiaVirus.h"
+using namespace std;
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -77,6 +83,8 @@ public:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedLoadScan();
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -89,6 +97,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON3, &CAboutDlg::OnBnClickedLoadScan)
 END_MESSAGE_MAP()
 
 
@@ -120,6 +129,7 @@ BEGIN_MESSAGE_MAP(CMFC_PEDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMFC_PEDlg::OnBnClickedMCPU)
 	ON_BN_CLICKED(IDC_BUTTON4, &CMFC_PEDlg::OnBnClickedFile)
 	ON_BN_CLICKED(IDC_BUTTON5, &CMFC_PEDlg::OnBnClickedRegister)
+	ON_BN_CLICKED(IDC_BUTTON8, &CMFC_PEDlg::OnBnClickedVirus)
 END_MESSAGE_MAP()
 
 
@@ -155,6 +165,9 @@ BOOL CMFC_PEDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	WhiteSave();
+
+	//初始化时遍历进程，将进程存储到
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -327,4 +340,61 @@ void CMFC_PEDlg::OnBnClickedRegister()
 	// TODO: 在此添加控件通知处理程序代码
 	CDiaServerAndRegister tempServer;
 	tempServer.DoModal();
+}
+
+
+void CMFC_PEDlg::OnBnClickedVirus()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDiaVirus tempVirus(&m_client);
+	if (!m_client.ConnectServer("127.0.0.1", 1234)) {
+		MessageBox(L"连接服务器失败！", L"Error!", MB_OK | MB_ICONWARNING);
+		return;
+	}
+	tempVirus.DoModal();
+}
+
+void CMFC_PEDlg::WhiteSave()
+{
+	//fstream output_stream;
+	//output_stream.open("D:\\temp.txt", ios::out | ios::app);
+	FILE *pfile = NULL;
+	if (!fopen_s(&pfile, "D:\\temp.txt", "w+"));
+
+
+	HANDLE hTool32 = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+	if (INVALID_HANDLE_VALUE == hTool32)
+	{
+		printf("快照error!\n");
+		return;
+	}
+	// 2. 开始遍历进程
+	PROCESSENTRY32 ti = { sizeof(PROCESSENTRY32) };
+	BOOL bRet = Process32First(hTool32, &ti);
+	if (!bRet)
+	{
+
+		//printf("Thread32First error!\n");
+		return;
+	}
+	int i = 0;
+	do
+	{
+		//if (ti.th32OwnerProcessID == dwPID)
+		{
+			//WCHAR temp[100] = {};
+			//wmemcpy_s(temp, 100, ti.szExeFile, 100);
+			//output_stream<< "12346" <<endl;
+			fprintf(pfile, "%S\n", ti.szExeFile);
+			i++;
+		}
+	} while (Process32Next(hTool32, &ti));
+	//output_stream.close();
+	fclose(pfile);
+}
+
+
+void CAboutDlg::OnBnClickedLoadScan()
+{
+	// TODO: 在此添加控件通知处理程序代码
 }
