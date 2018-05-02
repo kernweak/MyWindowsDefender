@@ -36,4 +36,5 @@ public:
 	static int m;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnNMClickGetModule(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButton1();
 };

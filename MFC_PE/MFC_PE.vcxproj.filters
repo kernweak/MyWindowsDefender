@@ -84,6 +84,12 @@
     <ClInclude Include="ClientScoket.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SoftMgr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Boot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_PE.cpp">
@@ -144,6 +150,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ClientScoket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftMgr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Boot.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

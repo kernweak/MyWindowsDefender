@@ -186,6 +186,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boot.h" />
     <ClInclude Include="ClientScoket.h" />
     <ClInclude Include="DiaCPU.h" />
     <ClInclude Include="DiaDelay.h" />
@@ -206,10 +207,12 @@
     <ClInclude Include="PEeditor.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SectionSpace.h" />
+    <ClInclude Include="SoftMgr.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boot.cpp" />
     <ClCompile Include="ClientScoket.cpp" />
     <ClCompile Include="DiaCPU.cpp" />
     <ClCompile Include="DiaDelay.cpp" />
@@ -229,6 +232,7 @@
     <ClCompile Include="PECalcu.cpp" />
     <ClCompile Include="PEeditor.cpp" />
     <ClCompile Include="SectionSpace.cpp" />
+    <ClCompile Include="SoftMgr.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

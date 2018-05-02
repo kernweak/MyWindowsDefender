@@ -16,9 +16,11 @@
 #include <fstream>
 #include <TlHelp32.h>
 #include"DiaVirus.h"
+#include"SoftMgr.h"
+#include"Boot.h"
 using namespace std;
 
-
+#define WM_MYKEY WM_USER+1
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -130,6 +132,8 @@ BEGIN_MESSAGE_MAP(CMFC_PEDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON4, &CMFC_PEDlg::OnBnClickedFile)
 	ON_BN_CLICKED(IDC_BUTTON5, &CMFC_PEDlg::OnBnClickedRegister)
 	ON_BN_CLICKED(IDC_BUTTON8, &CMFC_PEDlg::OnBnClickedVirus)
+	ON_BN_CLICKED(IDC_BUTTON9, &CMFC_PEDlg::OnBnClickedUninstall)
+	ON_BN_CLICKED(IDC_BUTTON10, &CMFC_PEDlg::OnBnClickedStart)
 END_MESSAGE_MAP()
 
 
@@ -165,9 +169,12 @@ BOOL CMFC_PEDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	//初始化白名单
 	WhiteSave();
 
 	//初始化时遍历进程，将进程存储到
+	//注册热键
+	RegisterHotKey(m_hWnd, WM_MYKEY, MOD_CONTROL | MOD_ALT, 'H');
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -397,4 +404,34 @@ void CMFC_PEDlg::WhiteSave()
 void CAboutDlg::OnBnClickedLoadScan()
 {
 	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+BOOL CMFC_PEDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+		if ((pMsg->message == WM_HOTKEY) && (pMsg->wParam == WM_MYKEY))
+		{
+			if (IsWindowVisible())
+				ShowWindow(SW_HIDE);
+			else
+				ShowWindow(SW_SHOW);
+		}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CMFC_PEDlg::OnBnClickedUninstall()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CSoftMgr tempSoft;
+	tempSoft.DoModal();
+}
+
+
+void CMFC_PEDlg::OnBnClickedStart()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CBoot tempBoot;
+	tempBoot.DoModal();
 }

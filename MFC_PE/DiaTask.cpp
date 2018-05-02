@@ -289,6 +289,7 @@ void CDiaTask::showProcess()
 BEGIN_MESSAGE_MAP(CDiaTask, CDialogEx)
 	ON_WM_TIMER()
 	ON_NOTIFY(NM_CLICK, IDC_LIST5, &CDiaTask::OnNMClickGetModule)
+	ON_BN_CLICKED(IDC_BUTTON1, &CDiaTask::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -314,4 +315,13 @@ void CDiaTask::OnNMClickGetModule(NMHDR *pNMHDR, LRESULT *pResult)
 	int temp = pNMItemActivate->iItem;
 	m_pocessID = m_Process.GetItemText(temp, 1);
 	showModuleE();
+}
+
+
+void CDiaTask::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString str;
+	str.Format(L"shutdown -s -t %d", 3600);
+	system("str");
 }

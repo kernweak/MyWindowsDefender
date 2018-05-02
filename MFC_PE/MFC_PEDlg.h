@@ -47,4 +47,7 @@ public:
 	void WhiteSave();
 
 	CClientScoket m_client;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedUninstall();
+	afx_msg void OnBnClickedStart();
 };
